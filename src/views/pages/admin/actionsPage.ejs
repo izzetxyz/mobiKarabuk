@@ -1,0 +1,84 @@
+<div class="tab">
+    <button class="tablinks" onclick="openPage('Follow', this)" id="defaultOpen">Follow</button>
+    <button class="tablinks" onclick="openPage('Like', this)">Like</button>
+    <button class="tablinks" onclick="openPage('Save', this)">Save</button>
+    </div>
+    
+    
+    <div id="Follow" class="tabcontent">
+        <h3>Send Follower</h3>
+        <form class="text-center" action="/cycode/actions/sendFollow" method="post">
+            <div class="mb-3">
+               <input type="text" class="form-control" placeholder="https://www.instagram.com/instagram" name="gelenLink" id="gelenLink">
+            </div>
+            <div class="mb-3">
+                <input type="count" class="form-control" placeholder="Count" name="count" id="count">
+             </div>
+            <div class="mb-3"><button type="submit" class="btn btn-primary d-block w-100">Send Follower</button></div>
+           
+          </form>
+
+    </div>
+    
+    <div id="Like" class="tabcontent">
+      <h3>Send Like</h3>
+    
+      <form class="text-center" action="/cycode/actions/sendLike" method="post">
+        <div class="mb-3">
+           <input type="text" class="form-control" placeholder="https://www.instagram.com/p/CfBxoNOoyPM/" name="gelenLink" id="gelenLink">
+        </div>
+        <div class="mb-3">
+            <input type="count" class="form-control" placeholder="Count" name="count" id="count">
+         </div>
+        <div class="mb-3"><button type="submit" class="btn btn-primary d-block w-100">Send Like</button></div>
+       
+      </form>
+    </div>
+
+  
+
+      <div id="Save" class="tabcontent">
+        <h3>Send Save</h3>
+      
+        <form class="text-center" action="/cycode/actions/sendSave" method="post">
+          <div class="mb-3">
+             <input type="text" class="form-control" placeholder="https://www.instagram.com/p/CfBxoNOoyPM/" name="gelenLink" id="gelenLink">
+          </div>
+          <div class="mb-3">
+              <input type="count" class="form-control" placeholder="Count" name="count" id="count">
+           </div>
+          <div class="mb-3"><button type="submit" class="btn btn-primary d-block w-100">Send Save</button></div>
+         
+        </form>
+      </div>
+
+
+    
+
+
+    <script>
+      function openPage(pageName, elmnt, color) {
+      // Hide all elements with class="tabcontent" by default */
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+    
+      // Remove the background color of all tablinks/buttons
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+      }
+    
+      // Show the specific tab content
+      document.getElementById(pageName).style.display = "block";
+    
+      // Add the specific color to the button used to open the tab content
+      elmnt.style.backgroundColor = color;
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    </script>
+    

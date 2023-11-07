@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <title><%- title %> </title>
+    <link rel="shortcut icon" href="/general/static/img/fav.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ff614e">
+    <meta name="description" content="<%- description %>">
+    <meta name="keywords" content="<%- keywords %>">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="<%- title %>"/>
+    <meta name="twitter:description" content="<%- description %>">
+    <style>
+        @charset "UTF-8";
+
+        @font-face {
+            font-family: proxima-nova;
+            font-style: normal;
+            font-weight: 900
+        }
+
+        img {
+            border: 0
+        }
+
+        body {
+            margin: 0
+        }
+
+        html {
+            font-family: sans-serif;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%
+        }
+
+        footer,
+        nav {
+            display: block
+        }
+
+        a {
+            background-color: transparent
+        }
+
+        a:active,
+        a:hover {
+            outline: 0
+        }
+
+        h1 {
+            margin: .67em 0
+        }
+
+        img {
+            vertical-align: middle
+        }
+
+        @media print {
+            img {
+                page-break-inside: avoid
+            }
+
+            *,
+            :after,
+            :before {
+                background: 0 0 !important;
+                color: #000 !important;
+                box-shadow: none !important;
+                text-shadow: none !important
+            }
+
+            a,
+            a:visited {
+                text-decoration: underline
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")"
+            }
+
+            img {
+                max-width: 100% !important
+            }
+
+            h2,
+            h3,
+            p {
+                orphans: 3;
+                widows: 3
+            }
+
+            h2,
+            h3 {
+                page-break-after: avoid
+            }
+
+            .navbar {
+                display: none
+            }
+        }
+
+        .btn,
+        .btn:active,
+        .open>.open>.open>.open>.open> {
+            background-image: none
+        }
+
+        *,
+        :after,
+        :before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        html {
+            font-size: 10px;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        body {
+            font-size: 14px;
+            line-height: 1.428571429;
+            color: #333
+        }
+
+        a {
+            color: #337ab7;
+            text-decoration: none
+        }
+
+        a:focus,
+        a:hover {
+            color: #23527c;
+            text-decoration: underline
+        }
+
+        a:focus {
+            outline: dotted thin;
+            outline: -webkit-focus-ring-color auto 5px;
+            outline-offset: -2px
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.1;
+            color: inherit
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 10px
+        }
+
+        h1 {
+            font-size: 65%
+        }
+
+        h4 {
+            margin-top: 10px;
+            margin-bottom: 10px
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-size: 36px
+        }
+
+        p {
+            margin: 0 0 10px
+        }
+
+        @media (min-width:768px) {
+            .container {
+                width: 750px
+            }
+        }
+
+        .container-fluid:after,
+        .container:after,
+        .row:after,
+        footer .footer__rights {
+            clear: both
+        }
+
+        .container-fluid:after,
+        .container-fluid:before,
+        .container:after,
+        .container:before,
+        .row:after,
+        .row:before {
+            display: table;
+            content: " "
+        }
+
+        .container,
+        .container-fluid {
+            margin-right: auto;
+            margin-left: auto
+        }
+
+        .container,
+        .container-fluid {
+            padding-left: 15px;
+            padding-right: 15px
+        }
+
+        @media (min-width:992px) {
+            .container {
+                width: 970px
+            }
+        }
+
+        @media (min-width:1200px) {
+            .container {
+                width: 1170px
+            }
+        }
+
+        .row {
+            margin-left: -15px;
+            margin-right: -15px
+        }
+
+        .col-md-8,
+        .col-sm-12,
+        .col-xs-12 {
+            position: relative;
+            min-height: 1px;
+            padding-left: 15px;
+            padding-right: 15px
+        }
+
+        .col-xs-12 {
+            width: 100%
+        }
+
+        @media (min-width:768px) {
+            .col-sm-12 {
+                float: left
+            }
+
+            .col-sm-12 {
+                width: 100%
+            }
+        }
+
+        @media (min-width:992px) {
+            .col-md-8 {
+                float: left
+            }
+
+            .col-md-8 {
+                width: 66.6666666667%
+            }
+
+            .col-md-offset-2 {
+                margin-left: 16.6666666667%
+            }
+        }
+
+        .btn {
+            margin-bottom: 0;
+            text-align: center;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            line-height: 1.428571429;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        .btn:active:focus,
+        .btn:focus {
+            outline: dotted thin;
+            outline: -webkit-focus-ring-color auto 5px;
+            outline-offset: -2px
+        }
+
+        .btn:focus,
+        .btn:hover {
+            color: #333;
+            text-decoration: none
+        }
+
+        .btn:active {
+            outline: 0;
+            -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+        }
+
+        .navbar-header:after,
+        .navbar-header:before,
+        .navbar:after,
+        .navbar:before {
+            display: table;
+            content: " "
+        }
+
+        .navbar {
+            position: relative;
+            min-height: 50px;
+            margin-bottom: 20px;
+            border: 1px solid transparent
+        }
+
+        .navbar:after {
+            clear: both
+        }
+
+        @media (min-width:768px) {
+            .navbar {
+                border-radius: 4px
+            }
+
+            .navbar-header {
+                float: left
+            }
+        }
+
+        .bg-holder {
+            overflow: hidden
+        }
+
+        .container-fluid>.navbar-header {
+            margin-right: -15px;
+            margin-left: -15px
+        }
+
+        @media (min-width:768px) {
+            .container-fluid>.navbar-header {
+                margin-right: 0;
+                margin-left: 0
+            }
+        }
+
+        .jumbotron,
+        .jumbotron h1 {
+            color: inherit
+        }
+
+        .jumbotron {
+            padding-top: 27px
+        }
+
+        .jumbotron p {
+            margin-bottom: 15px
+        }
+
+        .jumbotron .container {
+            max-width: 100%
+        }
+
+        @media screen and (min-width:768px) {
+            .jumbotron {
+                padding-bottom: 48px
+            }
+
+            .jumbotron h1 {
+                font-size: 63px
+            }
+        }
+
+        @media screen and (max-width:992px) {
+            .jumbotron {
+                padding-top: 48px
+            }
+        }
+
+        .main,
+        body {
+            overflow-x: hidden
+        }
+
+        .jumbotron h1 {
+            text-transform: uppercase
+        }
+
+        .full-width,
+        body,
+        html {
+            width: 100%
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: " ";
+            display: table
+        }
+
+        body,
+        h4 {
+            font-family: helvetica neue, Helvetica, Arial, sans-serif
+        }
+
+        @-ms-viewport {
+            width: device-width
+        }
+
+        body,
+        html {
+            height: 100%
+        }
+
+        body {
+            font-smooth: always;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: greyscale
+        }
+
+        .navbar {
+            padding-top: 20px
+        }
+
+        .navbar .container-fluid {
+            padding-left: 20px
+        }
+
+        .navbar .container-fluid .navbar-header a img {
+            margin-left: 100px;
+            margin-top: 5px;
+            width: 75px
+        }
+
+        .padded-top-bottom-15 {
+            padding-top: 15px;
+            padding-bottom: 15px
+        }
+
+        .jumbotron {
+            width: 100%;
+            background-color: transparent;
+            padding-bottom: 0;
+            margin-bottom: 0
+        }
+
+        .jumbotron .header-container {
+            background-color: #ff614e;
+            border: 1px solid #f5f4f4;
+            border-radius: 14px;
+            height: 460px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            flex-direction: column
+        }
+
+        .jumbotron .landing-round-logo {
+            width: 70px;
+            min-height: 70px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%)
+        }
+
+        .jumbotron p {
+            font-size: 16px;
+            font-weight: 400;
+            margin-top: 22px;
+            color: #7f8c8d
+        }
+
+        .jumbotron p:nth-of-type(1) {
+            margin-top: 20px
+        }
+
+        .login-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%
+        }
+
+        .btn {
+            border-radius: 5px;
+            background: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 5px 4px;
+            width: 230px;
+            justify-content: flex-start
+        }
+
+        .btn:hover {
+            opacity: .8;
+            transition: opacity .1s ease-in
+        }
+
+        .btn .btn-text {
+            flex-grow: 1;
+            text-align: left
+        }
+
+        .btn .btn-icon {
+            background-size: cover;
+            display: inline-block;
+            margin-right: 5px;
+            position: relative
+        }
+
+        .btn.cf-btn-twitter {
+            margin-left: 10px;
+            box-shadow: none;
+            color: #4a90e2
+        }
+
+        .btn.cf-btn-twitter .btn-icon-twitter {
+            width: 24px;
+            height: 20px;
+            margin-right: 9px;
+            background-image: url(general/static/img/btn-twitter-new.png)
+        }
+
+        .btn.cf-btn-instagram {
+            margin-left: 10px;
+            color: #e43a69;
+            box-shadow: none
+        }
+
+        .btn.cf-btn-instagram:hover {
+            opacity: .8;
+            transition: opacity .1s ease-in;
+            background: #fff
+        }
+
+        .btn.cf-btn-instagram .btn-icon-instagram {
+            width: 20px;
+            height: 20px;
+            margin-right: 9px;
+            background-image: url(static/img/btn-instagram-new.png)
+        }
+
+        .btn .icon-chevron {
+            width: 8px;
+            height: 12px;
+            background-size: contain
+        }
+
+        .btn .icon-chevron.icon-chevron-twitter {
+            background-image: url(static/img/icon-chevron-twitter.png)
+        }
+
+        .btn .icon-chevron.icon-chevron-instagram {
+            background-image: url(static/img/icon-chevron-instagram.png)
+        }
+
+        footer {
+            text-align: center;
+            padding: 0 15px
+        }
+
+        footer .footer__rights {
+            text-align: center;
+            color: #979fb6;
+            padding: 15px 0;
+            font-size: 12px;
+            line-height: 16px
+        }
+
+        footer .social {
+            padding-top: 50px
+        }
+
+        @keyframes bg-scrolling {
+            0% {
+                transform: translateX(0);
+                opacity: 0
+            }
+
+            1% {
+                opacity: 1
+            }
+
+            100% {
+                transform: translateX(-100%)
+            }
+        }
+
+        .main {
+            position: relative;
+            padding-bottom: 150px
+        }
+
+        .backgroundImage--fast,
+        .backgroundImage--slow,
+        .bg-holder {
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0
+        }
+
+        .backgroundImage--slow {
+            background: url(static/img/layer-one.png);
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            background-size: contain;
+            width: 300%;
+            animation: bg-scrolling 135s infinite linear
+        }
+
+        .backgroundImage--fast {
+            background: url(static/img/layer-two.png);
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            background-size: contain;
+            width: 300%;
+            animation: bg-scrolling 80s infinite linear
+        }
+
+        .bg-holder {
+            width: 100%
+        }
+
+        .page-body {
+            background: #fff
+        }
+
+        @media (max-width:768px) {
+            .jumbotron .login-actions {
+                flex-direction: column
+            }
+
+            .bg-holder {
+                background-color: #ff7f4d
+            }
+
+            .page-body {
+                border: 0
+            }
+
+            .backgroundImage--slow {
+                background-image: url(static/img/layer-one-mobile.png)
+            }
+
+            .backgroundImage--fast {
+                background-image: url(static/img/layer-two-mobile.png)
+            }
+
+            .jumbotron {
+                margin-top: 0;
+                padding-top: 0;
+                height: 100%
+            }
+
+            .jumbotron .container {
+                width: 100%;
+                height: 100%
+            }
+
+            .jumbotron .container .btn {
+                margin-top: 10px;
+                width: 100%;
+                font-size: 14px;
+                height: 50px
+            }
+
+            .jumbotron .container .btn.cf-btn-instagram {
+                margin-left: 0;
+                margin-top: 10px
+            }
+
+            .jumbotron .container .btn.cf-btn-twitter {
+                margin-left: 0;
+                margin-top: 10px
+            }
+
+            .jumbotron .header-container {
+                background-color: transparent;
+                border: none;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+                justify-content: space-between;
+                padding-top: 100px;
+                padding-bottom: 80px
+            }
+
+            .jumbotron .header-container .landing-round-logo {
+                top: auto;
+                left: auto;
+                position: relative;
+                transform: translate(0, 0);
+                margin: 0 0 20px
+            }
+
+            .navbar {
+                display: none
+            }
+
+            .main {
+                background: -moz-linear-gradient(top, rgba(255, 127, 77, .2) 0, #ff4e4e 50%, #ff4e4e 100%);
+                background: -webkit-linear-gradient(top, rgba(255, 127, 77, .2) 0, #ff4e4e 50%, #ff4e4e 100%);
+                background: linear-gradient(to bottom, rgba(255, 127, 77, .2) 0, #ff4e4e 50%, #ff4e4e 100%);
+                height: 100vh;
+                padding-bottom: 0;
+                align-items: center;
+                display: flex
+            }
+        }
+
+        @media (max-width:768px) and (orientation:landscape) {
+            .main {
+                min-height: 100vh;
+                height: auto
+            }
+        }
+
+        .jumbotron h1 {
+            font-family: AvenirLTStd85Heavy, Arial;
+            font-size: 32px;
+            color: #fff;
+            margin: 0
+        }
+
+        .jumbotron h2 {
+            font-family: OpenSansSemibold, Arial;
+            color: #f5f4f4;
+            font-size: 21px
+        }
+
+        @media screen and (min-width:768px) {
+            .full-width {
+                padding: 110px 0 0
+            }
+        }
+
+        @media screen and (max-width:320px) {
+            .jumbotron h1 {
+                font-family: AvenirLTStd85Heavy, Arial;
+                font-size: 26px;
+                color: #fff;
+                margin: 0
+            }
+
+            .jumbotron h2 {
+                font-family: OpenSansSemibold, Arial;
+                color: #f5f4f4;
+                font-size: 17px
+            }
+        }
+
+        .login-navbar {
+            box-shadow: none
+        }
+
+        a,
+        a:active,
+        a:focus,
+        a:hover {
+            text-decoration: none
+        }
+    </style>
+    <meta name="twitter:image" content="general/static/img/mar.svg" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+    <link rel="canonical" href="/" />
+
+</head>
+
+<body>
+
+    <%- body %>
+    
+</body>
+<script type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</html>
