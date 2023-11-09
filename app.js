@@ -6,7 +6,9 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
-
+const MongoDBStore = require('connect-mongodb-session')(session);
+// DB Connect
+require('./src/config/configDB');
 
 const app = express()
 const port = '9988'
@@ -40,6 +42,44 @@ app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, './src/views/pages'));
 
 // Session & Flash Message
+// Session & Flash Message
+
+const sessionStore = new MongoDBStore({
+    uri: process.env.MONGODB_CONNECTION_STRING,
+    collection: 'Sessions'
+  });
+
+  
+
+  app.use(cookieParser());
+
+
+app.use(session(
+    {
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24
+        },
+        store:sessionStore
+    }
+));
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.validation_error = req.flash('validation_error');
+    res.locals.tUserlogin_error = req.flash('tUserlogin_error');
+    res.locals.success_message = req.flash('success_message');
+    res.locals.email = req.flash('email');
+    res.locals.ad = req.flash('ad');
+    res.locals.soyad = req.flash('soyad');
+    res.locals.login_error = req.flash('error');
+    next();
+});
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 
 
@@ -54,7 +94,7 @@ app.use(function(req, res, next) {
 
 app.use('/', homeRouter);
 
-app.use('/cycode', authRouter, adminRouter);
+app.use('/admin', authRouter, adminRouter);
 
 
 app.use((req, res) => {

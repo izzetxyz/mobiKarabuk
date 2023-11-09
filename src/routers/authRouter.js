@@ -5,7 +5,12 @@ const validetorMiddleware = require('../middlewares/validationMiddleware');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 
-router.get('/', authMiddleware.oturumAcilmis, adminController.showHomePage)
+router.get('/login', authMiddleware.oturumAcilmamis, authController.showLoginForm)
+
+
+
+
+router.post('/login', authMiddleware.oturumAcilmamis, validetorMiddleware.validateLogin(), authController.login)
 
 
 

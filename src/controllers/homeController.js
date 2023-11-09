@@ -1,13 +1,6 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/igUserModel');
-const fs = require('fs');
 
-const Instagram = require('instagram-web-api')
-const FileCookieStore = require('tough-cookie-filestore2')
-var ref, urlSegmentToInstagramId, instagramIdToUrlSegment;
-ref = require('instagram-id-to-url-segment')
-urlSegmentToInstagramId = ref.urlSegmentToInstagramId
-instagramIdToUrlSegment = ref.instagramIdToUrlSegment;
+
 
 
 
@@ -43,14 +36,6 @@ const loginPageShow = async (req, res, next) => {
     }
 };
 
-const postPhoto = async (req,res,next) => {
-    try{
-        res.json({status: req.file.filename})
-    }
-    catch (err){
-        console.log(err)
-    }
-}
 
 
 
@@ -58,6 +43,5 @@ const postPhoto = async (req,res,next) => {
 
 module.exports = {
     homeShow,
-    postPhoto,
     loginPageShow,
 }

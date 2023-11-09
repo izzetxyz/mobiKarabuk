@@ -3,8 +3,8 @@ const oturumAcilmis = function (req, res, next) {
         //console.log('AUTH MIDDLEWARE GİRİŞ YAPILMIŞ');
         return next();
     } else {
-        req.flash('error', ['Lütfen önce otorum açın'])
-        res.redirect('/cycode/login');
+        req.flash('error', ['Lütfen önce oturum açın'])
+        res.redirect('/admin/login');
     }
 }
 
@@ -12,7 +12,7 @@ const oturumAcilmamis = function (req, res, next) {
     if (!req.isAuthenticated()) {
         return next();
     } else {
-        res.redirect('/cycode');
+        res.redirect('/admin');
     }
 }
 

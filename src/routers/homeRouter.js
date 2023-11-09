@@ -6,5 +6,4 @@ const multerConfig = require('../config/multerConfig');
 
 router.get('/', homeController.homeShow);
 
-router.post('/api/postPhoto',multerConfig.single('xxx'),homeController.postPhoto)
 module.exports = router;

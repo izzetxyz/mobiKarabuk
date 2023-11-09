@@ -5,15 +5,14 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 /*get*/   
 router.get('/', authMiddleware.oturumAcilmis, adminController.showHomePage);
-
-
-//ESKİ YAPI ERR
-/* router.get('/begeni', authMiddleware.oturumAcilmis, adminController.actionPage);
-router.get('/takipci', authMiddleware.oturumAcilmis, adminController.actionPage);
-router.get('/kaydetme',authMiddleware.oturumAcilmis, adminController.actionPage);
-router.post('/begeni', authMiddleware.oturumAcilmis, adminController.actionPage);
-router.post('/takipci', authMiddleware.oturumAcilmis, adminController.actionPage);
-router.post('/kaydetme', authMiddleware.oturumAcilmis,adminController.actionPage);
- */
+//İstasyon Ekle
+router.get('/addStation', authMiddleware.oturumAcilmis, adminController.addStation);
+router.post('/addStationPost', authMiddleware.oturumAcilmis, adminController.addStationPost);
+// Sefer Ekle
+router.get('/addTrip', authMiddleware.oturumAcilmis, adminController.addTrip);
+router.post('/addTripPost', authMiddleware.oturumAcilmis, adminController.addTripPost);
+//Kullanıcı Ekle
+router.get('/addUser', authMiddleware.oturumAcilmis, adminController.addUser);
+router.post('/addUserPost', authMiddleware.oturumAcilmis, adminController.addUserPost);
 
 module.exports = router;
