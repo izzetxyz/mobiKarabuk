@@ -12,14 +12,7 @@ const UserSchema = new Schema({
         type: String,
     },
     
-  
-   
-  
 
-
-    
-
-   
 }, { collection: 'Trip', timestamps: true });
 
 const Admin = mongoose.model('Trip', UserSchema);

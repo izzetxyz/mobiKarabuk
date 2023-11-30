@@ -24,7 +24,6 @@ const User = require('../models/userModel');
   
 ad
 */
-
 // AUTH CONTROLLER
 const showLoginForm = (req, res, next) => {
     try {

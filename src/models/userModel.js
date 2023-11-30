@@ -30,9 +30,6 @@ const UserSchema = new Schema({
         type:String
     }
 
-    
-
-   
 }, { collection: 'Users', timestamps: true });
 
 const Admin = mongoose.model('Users', UserSchema);
