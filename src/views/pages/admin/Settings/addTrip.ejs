@@ -1,23 +1,44 @@
 <div class="container mt-5">
-    <h2>Sefer Bilgileri</h2>
-    <form action="/admin/addTripPost" method="post" enctype="application/x-www-form-urlencoded">
-      <div class="form-group">
-        <label for="Saat">Sefer Saati</label>
-        <input type="text" name="tripTime" class="form-control" id="seferSaati" placeholder="Sefer Saati">
+  <h2>Sefer Bilgileri</h2>
+  <form action="/admin/addTripPost" method="post" enctype="application/x-www-form-urlencoded">
+      <div id="inputContainer">
+          <div class="form-group">
+            <label for="Saat">Otobüs Adı</label>
+            <input type="text" name="otobusAdi" class="form-control" id="seferSaati" placeholder="Otobüs Adı">
+        </div>
+          <div class="form-group">
+              <label for="Saat">Sefer Saati</label>
+              <input type="text" name="tripTime" class="form-control" id="seferSaati" placeholder="Sefer Saati">
+          </div>
+          <div class="form-group">
+            <label for="Guzergah">Sefer Başlangıç Noktası</label>
+            <input type="text" name="seferBaslangic" class="form-control" placeholder="Sefer Başlangıç Noktası">
+        </div>
+        <div class="form-group">
+          <label for="Guzergah">Sefer Bitiş Noktası</label>
+          <input type="text" name="seferBitis" class="form-control" placeholder="Sefer Bitiş Noktası">
+        </div>
+          <div class="form-group">
+              <label for="Guzergah">Sefer Guzergah</label>
+              <input type="text" name="tripRoad[]" class="form-control" placeholder="Sefer Güzergahı">
+          </div>
       </div>
-      <div class="form-group">
-        <label for="Guzergah">Sefer Guzergah</label>
-        <input type="text" name="tripRoad" class="form-control" id="seferGuzergahi" placeholder="Sefer Güzergahı">
-      </div>
-      
-
+      <button type="button" class="btn btn-warning" id="addInput">Veri Ekle</button>
       <button type="submit" class="btn btn-primary">Gönder</button>
-    </form>
-  </div>
-  
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  
-  </body>
-  </html>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function () {
+      // "Veri Ekle" butonuna tıklandığında yeni input alanı ekle
+      $("#addInput").click(function () {
+          var newInput = '<div class="form-group"><label for="Guzergah">Sefer Ek Durak</label><input type="text" name="tripRoad[]" class="form-control" placeholder="Sefer Güzergahı"></div>';
+          $("#inputContainer").append(newInput);
+      });
+  });
+</script>
+
+</body>
+</html>

@@ -5,6 +5,9 @@ const Trip = require('../models/tripModel');
 const User = require('../models/userModel');
 
 const { name } = require('ejs');
+
+
+
 const showHomePage = async (req, res, next) => {
 
     try {
@@ -102,25 +105,32 @@ const addTripPost = async (req, res, next) => {
     try {
         const tripTime = req.body.tripTime
         const tripRoad= req.body.tripRoad
-        
-        
+        const seferBaslangic = req.body.seferBaslangic
+        const seferBitis = req.body.seferBitis
+
         const kaydedilecek = {
             tripTime: tripTime,
+            seferBaslangic: seferBaslangic,
+            seferBitis: seferBitis,
             tripRoad: tripRoad,
         }
         const newProduct = new Trip(kaydedilecek);
         await newProduct.save();
         res.redirect('../admin');
 
-
     } catch (err) {
         console.log(err);
     }
 };
 
+
+
+
+
 module.exports = {
     showHomePage,
     addUser,
+    
     addUserPost,
     addStation,
     addStationPost,
