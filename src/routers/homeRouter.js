@@ -6,6 +6,10 @@ const multerConfig = require('../config/multerConfig');
 
 router.get('/', homeController.homeShow);
 router.get('/api/test',homeController.calculatePoint)
+router.get('/test',homeController.calistir)
 
 
+router.post('/api/searchStation',homeController.searchStation)
+router.post('/api/searchTrip',homeController.searchTrip)
+router.post('/api/getNearestStation',homeController.getNearestStation)
 module.exports = router;

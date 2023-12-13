@@ -57,7 +57,7 @@ const login = async (req, res, next) => {
           console.log('User Not Found')
       }
       passport.authenticate('local', {
-          successRedirect: '/',
+          successRedirect: '/admin',
           failureRedirect: '/login',
           failureFlash: true
       })(req, res, next);

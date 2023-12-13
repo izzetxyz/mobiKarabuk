@@ -2,14 +2,21 @@
     <h2>Sefer Bilgileri</h2>
     <form action="/admin/addStationPost" method="post" enctype="application/x-www-form-urlencoded">
       <div class="form-group">
-        <label for="seferSaati">Sefer Saati:</label>
-        <input type="text" name="tripTime" class="form-control" id="seferSaati" placeholder="Sefer Saati">
+        <label for="seferSaati">Durak Adı:</label>
+        <input type="text" name="stationName" class="form-control" id="stationName" placeholder="Durak Adı">
       </div>
       <div class="form-group">
-        <label for="seferGuzergahi">Sefer Guzergahı</label>
-        <input type="text" name="tripRoad" class="form-control" id="seferGuzergahi" placeholder="Sefer Güzergahi">
+        <label for="seferSaati">Durak Adresi:</label>
+        <input type="text" name="stationAddress" class="form-control" id="stationName" placeholder="Durak Adresi">
       </div>
-      
+      <div class="form-group">
+        <label for="seferGuzergahi">Durağın X Kordinatı:</label>
+        <input type="text" name="locationX" class="form-control" id="seferGuzergahi" placeholder="X Kordinatı">
+      </div>
+      <div class="form-group">
+        <label for="seferGuzergahi">Durağın Y Kordinatı:</label>
+        <input type="text" name="locationY" class="form-control" id="seferGuzergahi" placeholder="Y Kordinatı">
+      </div>
       <button type="submit" class="btn btn-primary">Gönder</button>
     </form>
   </div>

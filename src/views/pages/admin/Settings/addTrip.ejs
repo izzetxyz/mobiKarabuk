@@ -20,7 +20,12 @@
         </div>
           <div class="form-group">
               <label for="Guzergah">Sefer Guzergah</label>
-              <input type="text" name="tripRoad[]" class="form-control" placeholder="Sefer Güzergahı">
+              <br>
+              <select name="tripRoad[]" id="tripRoad">
+                <% Stations.forEach(element => { %>
+                  <option value="<%-element.stationName %>"><%-element.stationName %></option>
+                <% }) %>            
+              </select>
           </div>
       </div>
       <button type="button" class="btn btn-warning" id="addInput">Veri Ekle</button>
@@ -34,7 +39,7 @@
   $(document).ready(function () {
       // "Veri Ekle" butonuna tıklandığında yeni input alanı ekle
       $("#addInput").click(function () {
-          var newInput = '<div class="form-group"><label for="Guzergah">Sefer Ek Durak</label><input type="text" name="tripRoad[]" class="form-control" placeholder="Sefer Güzergahı"></div>';
+          var newInput = '<div class="form-group"> <label for="Guzergah">Sefer Guzergah</label> <br> <select name="tripRoad[]" id="tripRoad"> <% Stations.forEach(element => { %> <option value="<%-element.stationName %>"><%-element.stationName %></option> <% }) %> </select> </div>';
           $("#inputContainer").append(newInput);
       });
   });
