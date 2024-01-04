@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Trip = require('../models/tripModel');
+const axios = require('axios');
 const Station = require('../models/stationModel');
 const googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyBzU_tI_Y8m8KzwJP-wZcNqTTPogYtg2x4',
@@ -9,7 +10,27 @@ const googleMapsClient = require('@google/maps').createClient({
 
 
 // GET
-
+const getWeather = async (req,res,next) => {
+    try{
+        const response = await axios.get(
+            `https://servis.mgm.gov.tr/web/sondurumlar?merkezid=97801`,
+            {
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+                "Content-Type": "application/json, text/plain, */*",
+                "Origin": "https://www.mgm.gov.tr",
+                "Referer": "https://www.mgm.gov.tr",
+                "Accept": "*"
+                // İsteğe başka header'ları da ekleyebilirsiniz
+              },
+            }
+          );
+          res.json({sicaklik: response.data[0].sicaklik});
+    }
+    catch (err){
+        console.log(err)
+    }
+}
 const homeShow = async (req, res, next) => {
     try {
 
@@ -149,7 +170,7 @@ const searchStation = async (req,res,next) => {
 }
 const searchTrip = async (req,res,next) => {
     try{
-        const foundedStations = await Trip.findOne({otobusAdi:{"$regex": req.body.query, $options: 'i' } })
+        const foundedStations = await Trip.find({otobusAdi:{"$regex": req.body.query, $options: 'i' } })
         res.json(foundedStations)
     }
     catch (err){
@@ -181,6 +202,7 @@ const getNearestStation = async (req,res,next) => {
 
 module.exports = {
     homeShow,
+    getWeather,
     calistir,
     getNearestStation,
     searchStation,

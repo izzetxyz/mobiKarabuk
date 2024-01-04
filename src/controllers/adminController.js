@@ -118,8 +118,12 @@ const addTripPost = async (req, res, next) => {
         const seferBaslangic = req.body.seferBaslangic
         const seferBitis = req.body.seferBitis
         const otobusAdi = req.body.otobusAdi
+        const seferBaslangicDurakAdi = req.body.seferBaslangicDurakAdi
+        const seferBitisDurakAdi = req.body.seferBitisDurakAdi
         const kaydedilecek = {
             otobusAdi: otobusAdi,
+            seferBaslangicDurakAdi:seferBaslangicDurakAdi,
+            seferBitisDurakAdi:seferBitisDurakAdi,
             tripTime: tripTime,
             seferBaslangic: seferBaslangic,
             seferBitis: seferBitis,

@@ -7,7 +7,7 @@ const multerConfig = require('../config/multerConfig');
 router.get('/', homeController.homeShow);
 router.get('/api/test',homeController.calculatePoint)
 router.get('/test',homeController.calistir)
-
+router.get('/getWeather',homeController.getWeather)
 
 router.post('/api/searchStation',homeController.searchStation)
 router.post('/api/searchTrip',homeController.searchTrip)

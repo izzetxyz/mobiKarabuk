@@ -14,7 +14,15 @@ const UserSchema = new Schema({
         type: String,
         trim: true
     },
+    seferBaslangicDurakAdi: {
+        type: String,
+        trim: true
+    },
     seferBitis: {
+        type: String,
+        trim: true
+    },
+    seferBitisDurakAdi: {
         type: String,
         trim: true
     },
