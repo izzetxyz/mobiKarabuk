@@ -84,7 +84,7 @@ const addStationPost = async (req, res, next) => {
             stationAddress:stationAddress,
             location: {
                 type: "Point",
-                coordinates: [stationX, stationY]
+                coordinates: [Number(stationX), Number(stationY)]
             },
             stationX:stationX,
             stationY:stationY,

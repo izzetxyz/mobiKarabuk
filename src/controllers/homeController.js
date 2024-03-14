@@ -161,7 +161,7 @@ const calistir = async (req,res,next) => {
 // POST
 const searchStation = async (req,res,next) => {
     try{
-        const foundedStations = await Station.findOne({stationName:{"$regex": req.body.query, $options: 'i' } })
+        const foundedStations = await Station.find({stationName:{"$regex": req.body.query, $options: 'i' } })
         res.json(foundedStations)
     }
     catch (err){
@@ -192,8 +192,45 @@ const getNearestStation = async (req,res,next) => {
                 $maxDistance: Number(metres),
               },
             },
-          })
-        res.json(findNearest)
+          });
+          const stationsWithDistance = [];
+
+        for (const station of findNearest) {
+          const userCoords = [Number(userLocationX), Number(userLocationY)];
+          const stationCoords = station.location.coordinates;
+        
+          // Haversine formülü kullanarak mesafeyi hesapla
+          const distance = calculateDistance(userCoords, stationCoords);
+        
+          const stationWithDistance = {
+            ...station.toObject(), // Mongoose nesnesini temel JS nesnesine dönüştür
+            distance: Math.round(distance) // Mesafeyi tam sayıya yuvarla ve ekle
+          };
+        
+          stationsWithDistance.push(stationWithDistance);
+        }
+        
+        // Haversine formülü kullanarak iki nokta arasındaki mesafeyi hesaplayan fonksiyon
+        function calculateDistance(coord1, coord2) {
+          const [lat1, lon1] = coord1;
+          const [lat2, lon2] = coord2;
+        
+          const R = 6371e3; // Earth radius in meters
+          const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+          const φ2 = lat2 * Math.PI / 180;
+          const Δφ = (lat2 - lat1) * Math.PI / 180;
+          const Δλ = (lon2 - lon1) * Math.PI / 180;
+        
+          const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        
+          const distance = R * c; // in meters
+        
+          return distance;
+        }
+        res.json(stationsWithDistance)
     }
     catch (err){
         console.log(err)
