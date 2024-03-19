@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const Trip = require('../models/tripModel');
 const axios = require('axios');
 const Station = require('../models/stationModel');
+const Buses = require('../models/Buses');
 const googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyBzU_tI_Y8m8KzwJP-wZcNqTTPogYtg2x4',
     Promise: Promise
