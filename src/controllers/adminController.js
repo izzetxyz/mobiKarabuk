@@ -91,7 +91,7 @@ const addStationPost = async (req, res, next) => {
         }
         const newProduct = new Station(kaydedilecek);
         await newProduct.save();
-        res.redirect('../admin');
+        res.redirect('../admin/addStation');
 
 
     } catch (err) {
