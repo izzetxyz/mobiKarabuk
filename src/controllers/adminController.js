@@ -91,7 +91,7 @@ const addStationPost = async (req, res, next) => {
         }
         const newProduct = new Station(kaydedilecek);
         await newProduct.save();
-        res.redirect('../admin');
+        res.redirect('../admin/addStation');
 
 
     } catch (err) {
@@ -101,32 +101,34 @@ const addStationPost = async (req, res, next) => {
 const addTripPost = async (req, res, next) => {
 
     try {
-        const tripRoad= req.body.tripRoad
+        const tripSaatler = req.body.tripTime
+        const tripRoad = req.body.tripRoad
         var Road = []
         for(let i = 0;i<tripRoad.length;i++){
             const FindStation = await Station.findOne({stationName: tripRoad[i]})
             const added = {
-                LocationX: FindStation.stationX,
-                LocationY: FindStation.stationY,
+                LocationX: Number(FindStation.stationX),
+                LocationY: Number(FindStation.stationY),
+                location: {
+                    type: "Point",
+                    coordinates: [Number(FindStation.stationX), Number(FindStation.stationY)]
+                },
                 stationName: FindStation.stationName
             }
-
             Road.push(added)
             await Station.findByIdAndUpdate(FindStation._id,{ $push: { busesPassed: req.body.otobusAdi } })
         }
-        const tripTime = req.body.tripTime       
-        const seferBaslangic = req.body.seferBaslangic
-        const seferBitis = req.body.seferBitis
+        const tripTime = req.body.tripTime
         const otobusAdi = req.body.otobusAdi
+        const seferYonu = req.body.seferYonu
         const seferBaslangicDurakAdi = req.body.seferBaslangicDurakAdi
         const seferBitisDurakAdi = req.body.seferBitisDurakAdi
         const kaydedilecek = {
             otobusAdi: otobusAdi,
             seferBaslangicDurakAdi:seferBaslangicDurakAdi,
             seferBitisDurakAdi:seferBitisDurakAdi,
-            tripTime: tripTime,
-            seferBaslangic: seferBaslangic,
-            seferBitis: seferBitis,
+            seferYonu : seferYonu,
+            tripTimes: tripSaatler,
             tripRoad: Road,
         }
         const newProduct = new Trip(kaydedilecek);

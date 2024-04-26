@@ -1,43 +1,42 @@
 <div class="container mt-5">
   <h2>Sefer Bilgileri</h2>
   <form action="/admin/addTripPost" method="post" enctype="application/x-www-form-urlencoded">
-      <div id="inputContainer">
-          <div class="form-group">
-            <label for="Saat">Otobüs Adı</label>
-            <input type="text" name="otobusAdi" class="form-control" id="seferSaati" placeholder="Otobüs Adı">
-        </div>
-          <div class="form-group">
-              <label for="Saat">Sefer Saati</label>
-              <input type="text" name="tripTime" class="form-control" id="seferSaati" placeholder="Sefer Saati">
-          </div>
-          <div class="form-group">
-            <label for="Guzergah">Sefer Başlangıç Noktası</label>
-            <input type="text" name="seferBaslangic" class="form-control" placeholder="Sefer Başlangıç Noktası">
-        </div>
-        <div class="form-group">
-          <label for="Guzergah">Sefer Bitiş Noktası</label>
-          <input type="text" name="seferBitis" class="form-control" placeholder="Sefer Bitiş Noktası">
-        </div>
-        <div class="form-group">
-          <label for="Guzergah">Sefer Başlangıç Durak Adı</label>
-          <input type="text" name="seferBaslangicDurakAdi" class="form-control" placeholder="Sefer Başlangıç Durak Adı">
-        </div>
-        <div class="form-group">
-          <label for="Guzergah">Sefer Bitiş Durak Adı</label>
-          <input type="text" name="seferBitisDurakAdi" class="form-control" placeholder="Sefer Bitiş Durak Adı">
-        </div>
-          <div class="form-group">
-              <label for="Guzergah">Sefer Guzergah</label>
-              <br>
-              <select name="tripRoad[]" id="tripRoad">
-                <% Stations.forEach(element => { %>
-                  <option value="<%-element.stationName %>"><%-element.stationName %></option>
-                <% }) %>            
-              </select>
-          </div>
+    <div id="inputContainer">
+      <div class="form-group">
+        <label for="Saat">Otobüs Adı</label>
+        <input type="text" name="otobusAdi" class="form-control" id="seferSaati" placeholder="Otobüs Adı">
       </div>
-      <button type="button" class="btn btn-warning" id="addInput">Veri Ekle</button>
-      <button type="submit" class="btn btn-primary">Gönder</button>
+      <div id="saatContainer">
+        <div class="form-group">
+          <label for="Saat">Sefer Kalkış Saatleri</label>
+          <input type="text" name="tripTime[]" class="form-control" id="seferSaati" placeholder="Sefer Saati">
+        </div>  
+      </div>
+      <button type="button" class="btn btn-warning" id="addSaat">Saat Ekle</button>
+      <div class="form-group">
+        <label for="Guzergah">Sefer Yönü</label>
+        <input type="text" name="seferYonu" class="form-control" placeholder="Sefer Bitiş Noktası">
+      </div>
+      <div class="form-group">
+        <label for="Guzergah">Sefer Başlangıç Durak Adı</label>
+        <input type="text" name="seferBaslangicDurakAdi" class="form-control" placeholder="Sefer Başlangıç Durak Adı">
+      </div>
+      <div class="form-group">
+        <label for="Guzergah">Sefer Bitiş Durak Adı</label>
+        <input type="text" name="seferBitisDurakAdi" class="form-control" placeholder="Sefer Bitiş Durak Adı">
+      </div>
+      <div class="form-group">
+        <label for="Guzergah">Sefer Guzergah</label>
+        <br>
+        <select name="tripRoad[]" id="tripRoad">
+          <% Stations.forEach(element=> { %>
+            <option value="<%-element.stationName %>"><%-element.stationName %></option>
+            <% }) %>
+        </select>
+      </div>
+    </div>
+    <button type="button" class="btn btn-warning" id="addInput">Veri Ekle</button>
+    <button type="submit" class="btn btn-primary">Gönder</button>
   </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -45,13 +44,21 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
   $(document).ready(function () {
-      // "Veri Ekle" butonuna tıklandığında yeni input alanı ekle
-      $("#addInput").click(function () {
-          var newInput = '<div class="form-group"> <label for="Guzergah">Sefer Guzergah</label> <br> <select name="tripRoad[]" id="tripRoad"> <% Stations.forEach(element => { %> <option value="<%-element.stationName %>"><%-element.stationName %></option> <% }) %> </select> </div>';
-          $("#inputContainer").append(newInput);
-      });
+    // "Veri Ekle" butonuna tıklandığında yeni input alanı ekle
+    $("#addInput").click(function () {
+      var newInput = '<div class="form-group"> <label for="Guzergah">Sefer Guzergah</label> <br> <select name="tripRoad[]" id="tripRoad"> <% Stations.forEach(element => { %> <option value="<%-element.stationName %>"><%-element.stationName %></option> <% }) %> </select> </div>';
+      $("#inputContainer").append(newInput);
+    });
+  });
+  $(document).ready(function () {
+    // "Veri Ekle" butonuna tıklandığında yeni input alanı ekle
+    $("#addSaat").click(function () {
+      var newInput = '<div class="form-group"> <input type="text" name="tripTime[]" class="form-control" id="seferSaati" placeholder="Sefer Saati"> </div>';
+      $("#saatContainer").append(newInput);
+    });
   });
 </script>
 
 </body>
+
 </html>

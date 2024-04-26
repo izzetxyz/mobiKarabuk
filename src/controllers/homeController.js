@@ -147,15 +147,104 @@ const calculatePoint = async (req, res, next) => {
 }
 const calistir = async (req,res,next) => {
     try{
-        const test = await Station.collection.createIndex({ location: "2dsphere" });
-        console.log(test)
+        const kaynakDurakIsim = "İSTASYON"; // Kaynak durak ismi
+        const hedefDurakIsim = "EMNİYET MÜDÜRLÜĞÜ KARŞISI 1"; // Hedef durak ismi
+
+        // Kaynak duraktan hedef duraka en yakın otobüs rotasını bul
+        const deneme =  await Trip.aggregate([
+            {
+              $match: {
+                "tripRoad.stationName": kaynakDurakIsim // Kaynak durak ismine göre filtrele
+              }
+            },
+            {
+              $addFields: {
+                "location": {
+                  type: "Point",
+                  coordinates: [41.1959151, 32.61048606] // Kaynak durak koordinatları (örnek değerler)
+                }
+              }
+            },
+            {
+              $geoNear: {
+                near: {
+                  type: "Point",
+                  coordinates: [41.1959151, 32.61048606] // Kaynak durak koordinatları (örnek değerler)
+                },
+                distanceField: "distance",
+                spherical: true,
+                maxDistance: 10000, // Maksimum mesafe (metre cinsinden), ihtiyaca göre ayarlayabilirsiniz
+                query: {
+                  "tripRoad.stationName": hedefDurakIsim // Hedef durak ismi için filtreleme
+                }
+              }
+            },
+            {
+              $sort: { distance: 1 } // Mesafeye göre sırala, en yakın rota ilk sırada olacak
+            },
+            {
+              $limit: 1 // Sadece en yakın rota
+            }
+          ]);
+
+
+        console.log(deneme)
     }
     catch (err){
         console.log(err)
     }
 }
 
-
+const NasilGiderim = async (req,res,next) => {
+    try{
+        const fromStationName = req.body.fromStationName;
+        const toStationName = req.body.toStationName;
+        const directTrips = await Trip.find({
+            tripRoad: { $elemMatch: { stationName: fromStationName } },
+            tripRoad: { $elemMatch: { stationName: toStationName } }
+          });
+        
+          // Direkt sefer yoksa aktarmaya bakalım
+          if (!directTrips.length) {
+            const possibleTransfers = [];
+        
+            // Başlangıç noktasından kalkan tüm seferleri bul
+            const startingTrips = await Trip.find({ tripRoad: { $elemMatch: { stationName: fromStationName } } });
+        
+            for (const startingTrip of startingTrips) {
+              const intermediateStops = startingTrip.tripRoad.filter(station => station.stationName !== toStationName);
+              for (const intermediateStop of intermediateStops) {
+                // Ara durağa giden seferleri bul
+                const connectingTrips = await Trip.find({ tripRoad: { $elemMatch: { stationName: intermediateStop.stationName } } });
+        
+                // Bir aktarma seçeneği oluştur 
+                possibleTransfers.push({
+                  startingTrip,
+                  connectingTrips: connectingTrips.filter(trip => trip.tripRoad.find(station => station.stationName === toStationName))
+                });
+              }
+            }
+        
+            // 2. Adım: En Uygun Rotayı Seç
+            let bestRoute = null;
+            for (const transferOption of possibleTransfers) {
+              // En az aktarmaya sahip rotayı seç (yalnızca 1 aktarma var)
+              if (!bestRoute || transferOption.connectingTrips.length < bestRoute.connectingTrips.length) {
+                bestRoute = transferOption;
+              }
+            }
+        
+            res.json(bestRoute);
+          } else {
+            // Direkt sefer bulundu, onu döndür
+            res.json(directTrips[0]);
+          }
+        }
+    catch (err){
+        console.log(err)
+        res.json({status:false,errMessage:"Eksik yada Hatalı Parametre Gönderildi."})
+    }
+}
 
 
 
@@ -242,6 +331,7 @@ module.exports = {
     homeShow,
     getWeather,
     calistir,
+    NasilGiderim,
     getNearestStation,
     searchStation,
     searchTrip,

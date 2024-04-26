@@ -6,19 +6,15 @@ const UserSchema = new Schema({
         type: String,
         trim: true
     },
-    tripTime: {
-        type: String,
-        trim: true
+    tripTimes: {
+        type: Array,
     },
-    seferBaslangic: {
-        type: String,
-        trim: true
-    },
+
     seferBaslangicDurakAdi: {
         type: String,
         trim: true
     },
-    seferBitis: {
+    seferYonu: {
         type: String,
         trim: true
     },
