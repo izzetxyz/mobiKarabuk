@@ -267,6 +267,15 @@ const searchTrip = async (req,res,next) => {
         console.log(err)
     }
 }
+const searchTripYon = async (req,res,next) => {
+  try{
+      const foundedStations = await Trip.find({$and:[{otobusAdi:{"$regex": req.body.query, $options: 'i' } },{seferBaslangicDurakAdi: req.body.yon}]})
+      res.json(foundedStations)
+  }
+  catch (err){
+      console.log(err)
+  }
+}
 const getNearestStation = async (req,res,next) => {
     try{
         const userLocationX = req.body.longitude;
@@ -335,6 +344,7 @@ module.exports = {
     getNearestStation,
     searchStation,
     searchTrip,
+    searchTripYon,
     loginPageShow,
     calculatePoint,
 }

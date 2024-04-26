@@ -12,5 +12,6 @@ router.get('/getWeather',homeController.getWeather)
 router.post('/api/searchStation',homeController.searchStation)
 router.post('/api/NasilGiderim',homeController.NasilGiderim)
 router.post('/api/searchTrip',homeController.searchTrip)
+router.post('/api/searchTripYon',homeController.searchTripYon)
 router.post('/api/getNearestStation',homeController.getNearestStation)
 module.exports = router;
