@@ -259,13 +259,13 @@ const searchStation = async (req,res,next) => {
     }
 }
 const searchTrip = async (req,res,next) => {
-    try{
-        const foundedStations = await Trip.find({$and:[{otobusAdi:{"$regex": req.body.query, $options: 'i' } },{seferBaslangicDurakAdi: req.body.yon}]})
-        res.json(foundedStations)
-    }
-    catch (err){
-        console.log(err)
-    }
+  try{
+      const foundedStations = await Trip.find({otobusAdi:{"$regex": req.body.query, $options: 'i' } })
+      res.json(foundedStations)
+  }
+  catch (err){
+      console.log(err)
+  }
 }
 const searchTripYon = async (req,res,next) => {
   try{
