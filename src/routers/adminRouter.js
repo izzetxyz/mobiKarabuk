@@ -10,7 +10,7 @@ router.get('/addStation', authMiddleware.oturumAcilmis, adminController.addStati
 router.post('/addStationPost', authMiddleware.oturumAcilmis, adminController.addStationPost);
 // Sefer Ekle
 router.get('/addTrip', authMiddleware.oturumAcilmis, adminController.addTrip);
-router.post('/addTripPost', authMiddleware.oturumAcilmis, adminController.addTripPost);
+router.post('/addTripPost', adminController.addTripPost);
 //Kullanıcı Ekle
 router.get('/addUser', authMiddleware.oturumAcilmis, adminController.addUser);
 router.post('/addUserPost', authMiddleware.oturumAcilmis, adminController.addUserPost);
