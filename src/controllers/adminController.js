@@ -106,17 +106,22 @@ const addTripPost = async (req, res, next) => {
         var Road = []
         for(let i = 0;i<tripRoad.length;i++){
             const FindStation = await Station.findOne({stationName: tripRoad[i]})
-            const added = {
-                LocationX: Number(FindStation.stationX),
-                LocationY: Number(FindStation.stationY),
-                location: {
-                    type: "Point",
-                    coordinates: [Number(FindStation.stationX), Number(FindStation.stationY)]
-                },
-                stationName: FindStation.stationName
+            if(FindStation){
+                const added = {
+                    LocationX: Number(FindStation.stationX),
+                    LocationY: Number(FindStation.stationY),
+                    location: {
+                        type: "Point",
+                        coordinates: [Number(FindStation.stationX), Number(FindStation.stationY)]
+                    },
+                    stationName: FindStation.stationName
+                }
+                Road.push(added)
+                await Station.findByIdAndUpdate(FindStation._id,{ $push: { busesPassed: req.body.otobusAdi } })
             }
-            Road.push(added)
-            await Station.findByIdAndUpdate(FindStation._id,{ $push: { busesPassed: req.body.otobusAdi } })
+            else{
+                console.log("Durak Eksik : "+ tripRoad[i])
+            }
         }
         const tripTime = req.body.tripTime
         const otobusAdi = req.body.otobusAdi
