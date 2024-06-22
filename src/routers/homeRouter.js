@@ -8,8 +8,9 @@ router.get('/', homeController.homeShow);
 router.get('/api/test',homeController.calculatePoint)
 router.get('/test',homeController.calistir)
 router.get('/getWeather',homeController.getWeather)
-
+router.get('/api/getDuyurular',homeController.getDuyurular)
 router.post('/api/searchStation',homeController.searchStation)
+
 router.post('/api/NasilGiderim',homeController.NasilGiderim)
 router.post('/api/searchTrip',homeController.searchTrip)
 router.post('/api/searchTripYon',homeController.searchTripYon)

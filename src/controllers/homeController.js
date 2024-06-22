@@ -7,7 +7,7 @@ const googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyBzU_tI_Y8m8KzwJP-wZcNqTTPogYtg2x4',
     Promise: Promise
   });
-
+  const cheerio = require('cheerio');
 
 
 // GET
@@ -195,55 +195,73 @@ const calistir = async (req,res,next) => {
     }
 }
 
-const NasilGiderim = async (req,res,next) => {
-    try{
-        const fromStationName = req.body.fromStationName;
-        const toStationName = req.body.toStationName;
-        const directTrips = await Trip.find({
-            tripRoad: { $elemMatch: { stationName: fromStationName } },
-            tripRoad: { $elemMatch: { stationName: toStationName } }
-          });
-        
-          // Direkt sefer yoksa aktarmaya bakalım
-          if (!directTrips.length) {
-            const possibleTransfers = [];
-        
-            // Başlangıç noktasından kalkan tüm seferleri bul
-            const startingTrips = await Trip.find({ tripRoad: { $elemMatch: { stationName: fromStationName } } });
-        
-            for (const startingTrip of startingTrips) {
-              const intermediateStops = startingTrip.tripRoad.filter(station => station.stationName !== toStationName);
-              for (const intermediateStop of intermediateStops) {
-                // Ara durağa giden seferleri bul
-                const connectingTrips = await Trip.find({ tripRoad: { $elemMatch: { stationName: intermediateStop.stationName } } });
-        
-                // Bir aktarma seçeneği oluştur 
-                possibleTransfers.push({
-                  startingTrip,
-                  connectingTrips: connectingTrips.filter(trip => trip.tripRoad.find(station => station.stationName === toStationName))
-                });
+const NasilGiderim = async (req, res, next) => {
+  try {
+      const fromStationName = req.body.fromStationName;
+      const toStationName = req.body.toStationName;
+      
+      // Direkt seferleri ve olası aktarmaları birlikte araştır
+      const trips = await Trip.find({
+          $or: [
+              { $and: [{ tripRoad: { $elemMatch: { stationName: fromStationName } } }, { tripRoad: { $elemMatch: { stationName: toStationName } } }] },
+              { tripRoad: { $elemMatch: { stationName: fromStationName } } }
+          ]
+      });
+
+      if (trips.length === 0) {
+          res.status(404).json({ status: false, errMessage: "Direkt sefer veya aktarma bulunamadı." });
+      } else {
+          // En uygun rotayı seç
+          let bestRoute = null;
+          for (const trip of trips) {
+              if (!bestRoute || trip.tripRoad.length < bestRoute.tripRoad.length) {
+                  bestRoute = trip;
               }
-            }
-        
-            // 2. Adım: En Uygun Rotayı Seç
-            let bestRoute = null;
-            for (const transferOption of possibleTransfers) {
-              // En az aktarmaya sahip rotayı seç (yalnızca 1 aktarma var)
-              if (!bestRoute || transferOption.connectingTrips.length < bestRoute.connectingTrips.length) {
-                bestRoute = transferOption;
-              }
-            }
-        
-            res.json(bestRoute);
-          } else {
-            // Direkt sefer bulundu, onu döndür
-            res.json(directTrips[0]);
           }
+          res.json(bestRoute);
+      }
+  } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: false, errMessage: "Sunucu hatası." });
+  }
+}
+const getDuyurular = async (req,res,next) => {
+  try{
+    const url = 'http://www.karabuk.gov.tr/duyurular';
+    
+    await axios.get(url)
+      .then(response => {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        const tables = $('.ministry-announcements');
+        var Array = []
+        if (tables.length > 0) {
+          tables.each((index, element) => {
+            const $ = cheerio.load(element);
+            const day = $('.day');
+            const month = $('.month');
+            const title = $('.announce-text')
+            const news = {
+              Day: $(day).html(),
+              Mount: $(month).html(),
+              Content: $(title).html().split('<i class="icon-arrow_right"></i>')[0].trim(),
+              Url: $(title).attr('href').split('//')[1]
+            }
+            Array.push(news)
+          });
+          res.json(Array)
+        } else {
+          res.json({status:false,errCode:"Belirtilen sınıfa sahip tablo bulunamadı."})
         }
-    catch (err){
-        console.log(err)
-        res.json({status:false,errMessage:"Eksik yada Hatalı Parametre Gönderildi."})
-    }
+        
+      })
+      .catch(error => {
+        console.error(`Bir hata oluştu: ${error}`);
+      });
+  }
+  catch(err){
+    console.log(err)
+  }
 }
 
 
@@ -342,6 +360,7 @@ module.exports = {
     calistir,
     NasilGiderim,
     getNearestStation,
+    getDuyurular,
     searchStation,
     searchTrip,
     searchTripYon,

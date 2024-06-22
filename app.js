@@ -11,7 +11,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 require('./src/config/configDB');
 
 const app = express()
-const port = '9988'
+const port = '1881'
 
 // Router Settings
 const homeRouter = require('./src/routers/homeRouter');
